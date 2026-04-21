@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Abhishek Tiwari — Cloud Engineer</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #0a0e1a;
+    --bg2: #0f1425;
+    --bg3: #141929;
+    --card: #111827;
+    --card-border: rgba(99,179,237,0.12);
+    --accent: #63b3ed;
+    --accent2: #4fd1c5;
+    --accent3: #f6ad55;
+    --text: #e8edf5;
+    --muted: #7a8ba4;
+    --faint: rgba(99,179,237,0.07);
+  }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(10,14,26,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(99,179,237,0.1);
+    padding: 0 2rem;
+    display: flex; align-items: center; justify-content: space-between;
+    height: 58px;
+  }
+  .nav-logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 18px; color: var(--accent); letter-spacing: -0.5px; }
+  .nav-links { display: flex; gap: 1.8rem; }
+  .nav-links a { font-size: 13px; color: var(--muted); text-decoration: none; font-weight: 400; transition: color 0.2s; letter-spacing: 0.04em; }
+  .nav-links a:hover { color: var(--text); }
+
+  .hero {
+    min-height: 88vh;
+    display: flex; flex-direction: column; justify-content: center;
+    padding: 5rem 3rem 4rem;
+    position: relative; overflow: hidden;
+  }
+  .hero-grid {
+    position: absolute; inset: 0; z-index: 0;
+    background-image:
+      linear-gradient(rgba(99,179,237,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(99,179,237,0.04) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+  .hero-glow {
+    position: absolute; top: -120px; right: -120px;
+    width: 500px; height: 500px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(99,179,237,0.08) 0%, transparent 70%);
+    z-index: 0;
+  }
+  .hero-glow2 {
+    position: absolute; bottom: -80px; left: 10%;
+    width: 350px; height: 350px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(79,209,197,0.06) 0%, transparent 70%);
+    z-index: 0;
+  }
+  .hero-content { position: relative; z-index: 1; max-width: 860px; }
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 7px;
+    background: rgba(99,179,237,0.08); border: 1px solid rgba(99,179,237,0.2);
+    border-radius: 20px; padding: 5px 14px; font-size: 12px; color: var(--accent);
+    font-weight: 500; letter-spacing: 0.06em; margin-bottom: 1.5rem;
+  }
+  .hero-badge-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent2); animation: pulse 2s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.6;transform:scale(1.3)} }
+
+  h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(2.8rem, 6vw, 5rem);
+    font-weight: 800; line-height: 1.05;
+    letter-spacing: -2px;
+    color: var(--text);
+    margin-bottom: 0.5rem;
+  }
+  h1 .accent-name { color: var(--accent); }
+  .hero-tagline {
+    font-size: clamp(1rem, 2vw, 1.3rem);
+    color: var(--muted); font-weight: 300;
+    margin: 1.2rem 0 2rem;
+    max-width: 580px; line-height: 1.6;
+  }
+  .hero-cta { display: flex; gap: 12px; flex-wrap: wrap; }
+  .btn-primary {
+    background: var(--accent); color: #0a0e1a;
+    border: none; border-radius: 8px;
+    padding: 11px 24px; font-size: 14px; font-weight: 600;
+    cursor: pointer; transition: all 0.2s; font-family: 'DM Sans', sans-serif;
+    letter-spacing: 0.01em; text-decoration: none; display: inline-block;
+  }
+  .btn-primary:hover { background: #90cdf4; transform: translateY(-1px); }
+  .btn-ghost {
+    background: transparent; color: var(--accent);
+    border: 1px solid rgba(99,179,237,0.35); border-radius: 8px;
+    padding: 11px 24px; font-size: 14px; font-weight: 500;
+    cursor: pointer; transition: all 0.2s; font-family: 'DM Sans', sans-serif;
+    text-decoration: none; display: inline-block;
+  }
+  .btn-ghost:hover { background: rgba(99,179,237,0.08); border-color: var(--accent); }
+
+  .hero-stats {
+    display: flex; gap: 2.5rem; margin-top: 3.5rem;
+    padding-top: 2.5rem; border-top: 1px solid rgba(99,179,237,0.1);
+    flex-wrap: wrap;
+  }
+  .stat-num { font-family: 'Syne', sans-serif; font-size: 2rem; font-weight: 800; color: var(--accent); }
+  .stat-label { font-size: 12px; color: var(--muted); margin-top: 2px; letter-spacing: 0.03em; }
+
+  section { padding: 5rem 3rem; }
+  .section-label {
+    font-size: 11px; font-weight: 600; letter-spacing: 0.15em;
+    color: var(--accent); text-transform: uppercase; margin-bottom: 0.6rem;
+  }
+  h2 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(1.8rem, 3vw, 2.4rem);
+    font-weight: 700; letter-spacing: -1px;
+    color: var(--text); margin-bottom: 0.5rem;
+  }
+  .section-sub { color: var(--muted); font-size: 15px; font-weight: 300; margin-bottom: 3rem; max-width: 520px; line-height: 1.6; }
+
+  .skills-bg { background: var(--bg2); }
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 16px;
+  }
+  .skill-card {
+    background: var(--card);
+    border: 1px solid var(--card-border);
+    border-radius: 12px; padding: 1.4rem 1.4rem 1.2rem;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+  .skill-card:hover { border-color: rgba(99,179,237,0.3); transform: translateY(-2px); }
+  .skill-icon {
+    width: 40px; height: 40px; border-radius: 10px;
+    background: rgba(99,179,237,0.1); border: 1px solid rgba(99,179,237,0.2);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px; margin-bottom: 0.8rem;
+  }
+  .skill-card h3 { font-family: 'Syne', sans-serif; font-size: 14px; font-weight: 600; color: var(--text); margin-bottom: 0.5rem; }
+  .skill-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+  .tag {
+    background: rgba(99,179,237,0.07); border: 1px solid rgba(99,179,237,0.15);
+    border-radius: 5px; padding: 3px 9px; font-size: 11px; color: var(--accent);
+    font-weight: 500; letter-spacing: 0.02em;
+  }
+  .tag.green { background: rgba(79,209,197,0.07); border-color: rgba(79,209,197,0.2); color: var(--accent2); }
+  .tag.amber { background: rgba(246,173,85,0.08); border-color: rgba(246,173,85,0.2); color: var(--accent3); }
+
+  .exp-timeline { position: relative; padding-left: 28px; }
+  .exp-timeline::before {
+    content: ''; position: absolute; left: 8px; top: 8px; bottom: 0;
+    width: 1px; background: linear-gradient(to bottom, var(--accent), rgba(99,179,237,0.05));
+  }
+  .exp-item { position: relative; margin-bottom: 2.5rem; }
+  .exp-dot {
+    position: absolute; left: -24px; top: 6px;
+    width: 10px; height: 10px; border-radius: 50%;
+    background: var(--accent); border: 2px solid var(--bg);
+    box-shadow: 0 0 0 3px rgba(99,179,237,0.2);
+  }
+  .exp-dot.muted { background: var(--muted); box-shadow: 0 0 0 3px rgba(122,139,164,0.15); }
+  .exp-meta {
+    display: flex; align-items: center; gap: 12px;
+    flex-wrap: wrap; margin-bottom: 0.4rem;
+  }
+  .exp-role { font-family: 'Syne', sans-serif; font-size: 17px; font-weight: 700; color: var(--text); }
+  .exp-company { font-size: 13px; color: var(--accent); font-weight: 500; }
+  .exp-date {
+    font-size: 12px; color: var(--muted); font-weight: 400;
+    background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 5px; padding: 2px 9px; margin-left: auto;
+  }
+  .exp-bullets { list-style: none; margin-top: 0.8rem; display: flex; flex-direction: column; gap: 6px; }
+  .exp-bullets li {
+    font-size: 14px; color: var(--muted); line-height: 1.5; padding-left: 14px; position: relative;
+    font-weight: 300;
+  }
+  .exp-bullets li::before { content: '—'; position: absolute; left: 0; color: rgba(99,179,237,0.4); font-size: 12px; }
+
+  .certs-bg { background: var(--bg2); }
+  .certs-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; }
+  .cert-card {
+    background: var(--card); border: 1px solid var(--card-border);
+    border-radius: 12px; padding: 1.5rem;
+    display: flex; gap: 14px; align-items: flex-start;
+    transition: border-color 0.2s;
+  }
+  .cert-card:hover { border-color: rgba(99,179,237,0.3); }
+  .cert-badge {
+    min-width: 44px; height: 44px; border-radius: 10px;
+    background: linear-gradient(135deg, rgba(0,120,215,0.25), rgba(0,89,179,0.15));
+    border: 1px solid rgba(0,120,215,0.25);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Syne', sans-serif; font-weight: 800; font-size: 12px; color: #63b3ed;
+    text-align: center; line-height: 1.2;
+  }
+  .cert-title { font-size: 14px; font-weight: 500; color: var(--text); line-height: 1.35; }
+  .cert-code { font-size: 12px; color: var(--accent); margin-top: 4px; font-weight: 500; }
+
+  .projects-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 16px; }
+  .proj-card {
+    background: var(--card); border: 1px solid var(--card-border);
+    border-radius: 12px; padding: 1.5rem;
+    position: relative; overflow: hidden;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+  .proj-card:hover { border-color: rgba(99,179,237,0.3); transform: translateY(-2px); }
+  .proj-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    opacity: 0; transition: opacity 0.2s;
+  }
+  .proj-card:hover::before { opacity: 1; }
+  .proj-num { font-family: 'Syne', sans-serif; font-size: 40px; font-weight: 800; color: rgba(99,179,237,0.06); position: absolute; top: 8px; right: 16px; }
+  .proj-title { font-family: 'Syne', sans-serif; font-size: 15px; font-weight: 700; color: var(--text); margin-bottom: 6px; }
+  .proj-desc { font-size: 13px; color: var(--muted); line-height: 1.6; font-weight: 300; }
+
+  .contact-bg { background: var(--bg2); }
+  .contact-inner {
+    max-width: 640px;
+    background: var(--card); border: 1px solid var(--card-border);
+    border-radius: 16px; padding: 2.5rem;
+  }
+  .contact-links { display: flex; flex-direction: column; gap: 14px; margin-top: 1.5rem; }
+  .contact-item {
+    display: flex; align-items: center; gap: 14px;
+    padding: 12px 16px; border-radius: 10px;
+    background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05);
+    cursor: pointer; transition: border-color 0.2s; text-decoration: none;
+  }
+  .contact-item:hover { border-color: rgba(99,179,237,0.3); }
+  .contact-icon {
+    width: 38px; height: 38px; border-radius: 9px;
+    background: rgba(99,179,237,0.1); border: 1px solid rgba(99,179,237,0.2);
+    display: flex; align-items: center; justify-content: center; font-size: 17px;
+    font-family: 'Syne', sans-serif; font-weight: 700; color: var(--accent);
+  }
+  .contact-label { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; }
+  .contact-val { font-size: 14px; color: var(--text); font-weight: 500; margin-top: 1px; }
+  .contact-arrow { margin-left: auto; color: var(--muted); font-size: 16px; }
+
+  .award-banner {
+    display: flex; align-items: center; gap: 16px;
+    background: rgba(246,173,85,0.07); border: 1px solid rgba(246,173,85,0.2);
+    border-radius: 12px; padding: 1.2rem 1.5rem; margin-bottom: 2rem;
+  }
+  .award-icon { font-size: 24px; }
+  .award-text { font-size: 14px; color: #f6c56a; font-weight: 500; }
+  .award-sub { font-size: 12px; color: var(--muted); margin-top: 2px; font-weight: 300; }
+
+  .edu-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px; }
+  .edu-card {
+    background: var(--card); border: 1px solid var(--card-border);
+    border-radius: 12px; padding: 1.4rem;
+    transition: border-color 0.2s;
+  }
+  .edu-card:hover { border-color: rgba(99,179,237,0.3); }
+  .edu-deg { font-family: 'Syne', sans-serif; font-size: 14px; font-weight: 700; color: var(--text); margin-bottom: 4px; }
+  .edu-inst { font-size: 13px; color: var(--accent); font-weight: 400; }
+
+  footer {
+    text-align: center; padding: 2rem;
+    border-top: 1px solid rgba(99,179,237,0.07);
+    font-size: 12px; color: var(--muted); font-weight: 300;
+  }
+
+  @media (max-width: 640px) {
+    section { padding: 3.5rem 1.4rem; }
+    .hero { padding: 4rem 1.4rem 3rem; }
+    nav { padding: 0 1.2rem; }
+    .nav-links { gap: 1rem; }
+    .hero-stats { gap: 1.5rem; }
+    .exp-date { margin-left: 0; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">AT/</div>
+  <div class="nav-links">
+    <a href="#skills">Skills</a>
+    <a href="#experience">Experience</a>
+    <a href="#projects">Projects</a>
+    <a href="#certs">Certs</a>
+    <a href="#contact">Contact</a>
+  </div>
+</nav>
+
+<section class="hero" id="home">
+  <div class="hero-grid"></div>
+  <div class="hero-glow"></div>
+  <div class="hero-glow2"></div>
+  <div class="hero-content">
+    <div class="hero-badge">
+      <span class="hero-badge-dot"></span>
+      Available for opportunities
+    </div>
+    <h1>Abhishek<br><span class="accent-name">Tiwari</span></h1>
+    <p class="hero-tagline">Azure Cloud Engineer building scalable, secure, and high-availability infrastructure across IaaS, PaaS, and hybrid cloud environments.</p>
+    <div class="hero-cta">
+      <a class="btn-primary" href="#contact">Get in touch</a>
+      <a class="btn-ghost" href="#experience">View experience</a>
+    </div>
+    <div class="hero-stats">
+      <div>
+        <div class="stat-num">4+</div>
+        <div class="stat-label">Years of experience</div>
+      </div>
+      <div>
+        <div class="stat-num">3×</div>
+        <div class="stat-label">Microsoft certifications</div>
+      </div>
+      <div>
+        <div class="stat-num">40%</div>
+        <div class="stat-label">Deployment efficiency gain</div>
+      </div>
+      <div>
+        <div class="stat-num" style="color:var(--accent3)">★</div>
+        <div class="stat-label">Rising Star 2024</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="skills-bg" id="skills">
+  <div class="section-label">Capabilities</div>
+  <h2>Core competencies</h2>
+  <p class="section-sub">A deep toolkit spanning cloud architecture, automation, DevOps, and security.</p>
+  <div class="skills-grid">
+    <div class="skill-card">
+      <div class="skill-icon">☁️</div>
+      <h3>Cloud platforms</h3>
+      <div class="skill-tags">
+        <span class="tag">Azure IaaS</span><span class="tag">Azure PaaS</span>
+        <span class="tag">AWS</span><span class="tag">GCP</span>
+        <span class="tag">Hybrid Cloud</span>
+      </div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon" style="background:rgba(79,209,197,0.1);border-color:rgba(79,209,197,0.2);">⚙️</div>
+      <h3>Automation & IaC</h3>
+      <div class="skill-tags">
+        <span class="tag green">Terraform</span><span class="tag green">Ansible</span>
+        <span class="tag green">Azure PowerShell</span><span class="tag green">Bash</span><span class="tag green">Python</span>
+      </div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon" style="background:rgba(246,173,85,0.1);border-color:rgba(246,173,85,0.2);">🔄</div>
+      <h3>DevOps & CI/CD</h3>
+      <div class="skill-tags">
+        <span class="tag amber">Jenkins</span><span class="tag amber">GitHub Actions</span><span class="tag amber">SonarQube</span>
+      </div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">🐳</div>
+      <h3>Containers</h3>
+      <div class="skill-tags">
+        <span class="tag">Docker</span><span class="tag">Kubernetes</span><span class="tag">Helm</span>
+      </div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon" style="background:rgba(79,209,197,0.1);border-color:rgba(79,209,197,0.2);">📡</div>
+      <h3>Networking</h3>
+      <div class="skill-tags">
+        <span class="tag green">DNS</span><span class="tag green">VPN</span><span class="tag green">Load Balancer</span>
+        <span class="tag green">App Gateway</span><span class="tag green">Firewall</span>
+      </div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon" style="background:rgba(246,173,85,0.1);border-color:rgba(246,173,85,0.2);">📊</div>
+      <h3>Monitoring</h3>
+      <div class="skill-tags">
+        <span class="tag amber">Azure Monitor</span><span class="tag amber">Log Analytics</span>
+        <span class="tag amber">Prometheus</span><span class="tag amber">Grafana</span>
+      </div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">🔒</div>
+      <h3>Security & compliance</h3>
+      <div class="skill-tags">
+        <span class="tag">RBAC</span><span class="tag">NSG</span>
+        <span class="tag">Data Protection</span><span class="tag">Backup & DR</span>
+      </div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon" style="background:rgba(79,209,197,0.1);border-color:rgba(79,209,197,0.2);">🏃</div>
+      <h3>Methodology</h3>
+      <div class="skill-tags">
+        <span class="tag green">Agile</span><span class="tag green">Scrum</span><span class="tag green">ITIL</span>
+        <span class="tag green">Release Mgmt</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="experience">
+  <div class="section-label">Career</div>
+  <h2>Professional experience</h2>
+  <p class="section-sub">A progression from IT support to cloud architecture over 4+ years.</p>
+
+  <div class="award-banner">
+    <div class="award-icon">🏆</div>
+    <div>
+      <div class="award-text">Rising Star of the Year — 2024</div>
+      <div class="award-sub">Recognised for improving deployment efficiency by 40% at SCA Ecode Solutions</div>
+    </div>
+  </div>
+
+  <div class="exp-timeline">
+    <div class="exp-item">
+      <div class="exp-dot"></div>
+      <div class="exp-meta">
+        <span class="exp-role">Cloud Engineer</span>
+        <span class="exp-company">Tech Mahindra, Noida</span>
+        <span class="exp-date">Sep 2024 – Present</span>
+      </div>
+      <ul class="exp-bullets">
+        <li>Designed and implemented Azure IaaS & PaaS infrastructure solutions at scale.</li>
+        <li>Modernised legacy applications to cloud-native architectures with DevOps teams.</li>
+        <li>Automated resource provisioning and deployment via Azure PowerShell scripts.</li>
+        <li>Enforced security compliance through RBAC, NSG, and governance policies.</li>
+        <li>Maintained production reliability, scalability, and performance during incidents.</li>
+      </ul>
+    </div>
+    <div class="exp-item">
+      <div class="exp-dot muted"></div>
+      <div class="exp-meta">
+        <span class="exp-role">System Administrator</span>
+        <span class="exp-company">Tecquire Solutions, Noida</span>
+        <span class="exp-date">Jun 2024 – Sep 2024</span>
+      </div>
+      <ul class="exp-bullets">
+        <li>Managed Azure VMs, storage, and networking infrastructure.</li>
+        <li>Implemented backup and disaster recovery using Azure Site Recovery.</li>
+        <li>Configured monitoring alerts for proactive incident management.</li>
+      </ul>
+    </div>
+    <div class="exp-item">
+      <div class="exp-dot muted"></div>
+      <div class="exp-meta">
+        <span class="exp-role">System Support Engineer</span>
+        <span class="exp-company">SCA Ecode Solutions</span>
+        <span class="exp-date">Aug 2022 – Mar 2024</span>
+      </div>
+      <ul class="exp-bullets">
+        <li>Supported distributed IT infrastructure and resolved technical incidents.</li>
+        <li>Streamlined deployment processes, improving operational efficiency by 40%.</li>
+      </ul>
+    </div>
+    <div class="exp-item">
+      <div class="exp-dot muted"></div>
+      <div class="exp-meta">
+        <span class="exp-role">Desktop Support Engineer</span>
+        <span class="exp-company">HCL Technologies</span>
+        <span class="exp-date">Sep 2021 – Jun 2022</span>
+      </div>
+      <ul class="exp-bullets">
+        <li>Provided technical support with strict adherence to ITIL processes.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section style="background:var(--bg2);" id="projects">
+  <div class="section-label">Achievements</div>
+  <h2>Key projects</h2>
+  <p class="section-sub">Impactful cloud solutions delivered across architecture, networking, and observability.</p>
+  <div class="projects-grid">
+    <div class="proj-card">
+      <div class="proj-num">01</div>
+      <div class="proj-title">High-availability architecture</div>
+      <div class="proj-desc">Designed fault-tolerant systems using Azure Availability Sets, Availability Zones, and Load Balancers to ensure continuous uptime for production workloads.</div>
+    </div>
+    <div class="proj-card">
+      <div class="proj-num">02</div>
+      <div class="proj-title">Hybrid connectivity implementation</div>
+      <div class="proj-desc">Built secure hybrid cloud connectivity through Site-to-Site and Point-to-Site VPN configurations, bridging on-premises and Azure environments.</div>
+    </div>
+    <div class="proj-card">
+      <div class="proj-num">03</div>
+      <div class="proj-title">Monitoring & observability platform</div>
+      <div class="proj-desc">Integrated Azure Log Analytics with custom dashboards for real-time performance tracking, alerting, and proactive incident response.</div>
+    </div>
+    <div class="proj-card">
+      <div class="proj-num">04</div>
+      <div class="proj-title">Legacy-to-cloud modernisation</div>
+      <div class="proj-desc">Collaborated with architects to migrate legacy enterprise applications to cloud-native architectures, improving scalability and reducing operational overhead.</div>
+    </div>
+  </div>
+</section>
+
+<section class="certs-bg" id="certs">
+  <div class="section-label">Credentials</div>
+  <h2>Certifications</h2>
+  <p class="section-sub">Microsoft-certified across the Azure stack, from fundamentals to expert level.</p>
+  <div class="certs-grid">
+    <div class="cert-card">
+      <div class="cert-badge">AZ<br>400</div>
+      <div>
+        <div class="cert-title">Microsoft Certified: DevOps Engineer Expert</div>
+        <div class="cert-code">AZ-400</div>
+      </div>
+    </div>
+    <div class="cert-card">
+      <div class="cert-badge">AZ<br>104</div>
+      <div>
+        <div class="cert-title">Microsoft Certified: Azure Administrator Associate</div>
+        <div class="cert-code">AZ-104</div>
+      </div>
+    </div>
+    <div class="cert-card">
+      <div class="cert-badge">AZ<br>900</div>
+      <div>
+        <div class="cert-title">Microsoft Certified: Azure Fundamentals</div>
+        <div class="cert-code">AZ-900</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="education">
+  <div class="section-label">Education</div>
+  <h2>Academic background</h2>
+  <p class="section-sub">Formal training in computer science and network administration.</p>
+  <div class="edu-grid">
+    <div class="edu-card">
+      <div class="edu-deg">Bachelor of Computer Applications (BCA)</div>
+      <div class="edu-inst">Manipal University Jaipur</div>
+    </div>
+    <div class="edu-card">
+      <div class="edu-deg">Master in Network Administration (MNA)</div>
+      <div class="edu-inst">Jetking, Lucknow</div>
+    </div>
+    <div class="edu-card">
+      <div class="edu-deg">Diploma in Information Technology</div>
+      <div class="edu-inst">BTEUP</div>
+    </div>
+  </div>
+</section>
+
+<section class="contact-bg" id="contact">
+  <div class="section-label">Let's connect</div>
+  <h2>Get in touch</h2>
+  <p class="section-sub">Open to new roles, collaborations, and conversations about cloud architecture.</p>
+  <div class="contact-inner">
+    <div class="contact-links">
+      <a class="contact-item" href="tel:+917355015647">
+        <div class="contact-icon">📞</div>
+        <div>
+          <div class="contact-label">Phone</div>
+          <div class="contact-val">+91 73550 15647</div>
+        </div>
+        <div class="contact-arrow">↗</div>
+      </a>
+      <a class="contact-item" href="mailto:aabhishek0099@gmail.com">
+        <div class="contact-icon">✉️</div>
+        <div>
+          <div class="contact-label">Email</div>
+          <div class="contact-val">aabhishek0099@gmail.com</div>
+        </div>
+        <div class="contact-arrow">↗</div>
+      </a>
+      <a class="contact-item" href="https://www.linkedin.com/in/aabhishek0099" target="_blank">
+        <div class="contact-icon" style="background:rgba(10,102,194,0.15);border-color:rgba(10,102,194,0.3);">in</div>
+        <div>
+          <div class="contact-label">LinkedIn</div>
+          <div class="contact-val">linkedin.com/in/aabhishek0099</div>
+        </div>
+        <div class="contact-arrow">↗</div>
+      </a>
+      <a class="contact-item" href="https://github.com/aabhishek0099" target="_blank">
+        <div class="contact-icon" style="background:rgba(255,255,255,0.05);border-color:rgba(255,255,255,0.12);">GH</div>
+        <div>
+          <div class="contact-label">GitHub</div>
+          <div class="contact-val">github.com/aabhishek0099</div>
+        </div>
+        <div class="contact-arrow">↗</div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  Built with care &middot; Abhishek Tiwari &copy; 2025 &middot; Azure Cloud Engineer
+</footer>
+
+</body>
+</html>
